@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity(name = "myUser")
@@ -31,10 +32,10 @@ public class User implements Serializable {
 	private String phoneNo;
 	@Column(name = "created_by")
 	private String createdBy;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "MM/dd/yyyy" )
 	@Column(name = "created_on")
 	// @PastOrPresent
-	private Date createdOn;
+	private DateTime createdOn;
 	@Column(name = "updated_by")
 	private String updatedBy;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -46,7 +47,7 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(int id, String username, String email, String phoneNo, String createdBy, Date createdOn) {
+	public User(int id, String username, String email, String phoneNo, String createdBy, DateTime createdOn) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -110,11 +111,11 @@ public class User implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedOn() {
+	public DateTime getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(DateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 

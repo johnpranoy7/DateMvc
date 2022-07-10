@@ -51,4 +51,60 @@
 		</form:form>
 	</div>
 </body>
+<script>
+var userDateFormat = "dd-MM-yyyy";
+const formElem = document.querySelector('form');
+const ddMMyyyy_Reg = /(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})/gi;
+const yyyyMMdd_Reg = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
+formElem.addEventListener('formdata', (e) => {
+e.preventDefault();
+console.log("listnerr:");
+console.log(e);
+const formData = e.formData;
+console.log(e.formData);
+for(const pair of formData.entries()) {
+	var newdate = "";
+	if(ddMMyyyy_Reg.test(pair[1]))
+	  {	
+		var delim = pair[1].includes("/") ? "/" : "-";
+		var datearray = date.split(delim);
+		//Converting ddMMyyyy to MMddyyyy
+	  	newdate = datearray[1] + "/" + datearray[0] + "/" + datearray[2];
+		console.log(pair[0] + "," + pair[1]);
+		formData.set(pair[0] , newdate);
+	  }
+	else if(yyyyMMdd_Reg.test(pair[1]))
+	  {	
+		var delim = pair[1].includes("/") ? "/" : "-";
+		var datearray = pair[1].split(delim);
+		//Converting yyyyMMdd to MMddyyyy
+	  	newdate = datearray[1] + "/" + datearray[2] + "/" + datearray[0];
+		console.log(pair[0] + "," + pair[1]);
+		formData.set(pair[0] , newdate);
+	  }
+}
+
+formData.set('username', formData.get('username').toUpperCase());
+formData.set('email', formData.get('email').toUpperCase());
+console.log(form.querySelector('input[name="username"]')); // FOO
+console.log(form.querySelector('input[name="email"]')); // BAR
+
+
+console.log("end");
+
+/* const formData = new FormData(formElem);
+console.log(formData.get('username')); // foo
+console.log(formData.get('email')); // bar
+});
+
+formElem.addEventListener('formdata', (e) => {
+console.log('formdata fired');
+
+const formData = e.formData;
+formData.set('username', formData.get('username').toUpperCase());
+formData.set('email', formData.get('email').toUpperCase());
+}); */
+});
+
+</script>
 </html>
